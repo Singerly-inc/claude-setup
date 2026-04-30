@@ -21,10 +21,14 @@ if [[ "$(uname)" != "Darwin" ]]; then
   exit 1
 fi
 
-# jq チェック
+# jq チェック（なければ brew で自動インストール）
 if ! command -v jq &> /dev/null; then
-  echo "❌ jq が見つかりません。先に brew install jq を実行してください"
-  exit 1
+  echo "⏳ jq をインストール中..."
+  if ! command -v brew &> /dev/null; then
+    echo "❌ Homebrew が見つかりません。https://brew.sh からインストール後、再実行してください"
+    exit 1
+  fi
+  brew install jq
 fi
 
 # ディレクトリ作成
